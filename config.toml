@@ -1,0 +1,14 @@
+baseURL = "http://s33how.me"
+languageCode = "en-us"
+title = "s33how.me"
+theme = "hechang"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    pre = "home"
+    url = "/"
+  [[menu.main]]
+    name = "Posts"
+    pre = "posts"
+    url = "/posts/"
