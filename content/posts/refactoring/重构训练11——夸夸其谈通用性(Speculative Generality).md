@@ -13,19 +13,27 @@ tags: 重构
 ```typescript
 // src/utils
 // Divide resources into average chunks based on maximum threshold
-export function getAvarageChunksByThreshold<T>(source: T[], threshold: number): T[][] {
-  const chunkNum = Math.ceil(source.length / threshold);
-  const chunkSize = Math.ceil(source.length / chunkNum);
+export function getAvarageChunksByThreshold<T>(
+  source: T[],
+  threshold: number
+): T[][] {
+  const chunkNum = Math.ceil(source.length / threshold)
+  const chunkSize = Math.ceil(source.length / chunkNum)
 
   return chunk<T>(source, chunkSize)
 }
 
 // src/app.ts
 // 每个 batch request 的最大请求数量
-const BATCH_GET_ROOM_TYPE_MAX_NUMBER = 50;
+const BATCH_GET_ROOM_TYPE_MAX_NUMBER = 50
 
-async function getBatchGetRoomType(urls: string[], threshold = BATCH_GET_ROOM_TYPE_MAX_NUMBER): Promise<RoomType[]> {
-  const requests =  getAvarageChunksByThreshold(urls, threshold).map(batchGetRoomType)
+async function getBatchGetRoomType(
+  urls: string[],
+  threshold = BATCH_GET_ROOM_TYPE_MAX_NUMBER
+): Promise<RoomType[]> {
+  const requests = getAvarageChunksByThreshold(urls, threshold).map(
+    batchGetRoomType
+  )
 
   return await Promise.all(requests)
 }
@@ -40,17 +48,17 @@ async function getBatchGetRoomType(urls: string[], threshold = BATCH_GET_ROOM_TY
 ```typescript
 // src/app.ts
 // 每个 batch request 的最大请求数量
-const BATCH_GET_ROOM_TYPE_MAX_NUMBER = 50;
+const BATCH_GET_ROOM_TYPE_MAX_NUMBER = 50
 
 function getAvarageUrlChunks(urls: string[]): srting[][] {
-  const chunkNum = Math.ceil(urls.length / BATCH_GET_ROOM_TYPE_MAX_NUMBER);
-  const chunkSize = Math.ceil(urls.length / chunkNum);
+  const chunkNum = Math.ceil(urls.length / BATCH_GET_ROOM_TYPE_MAX_NUMBER)
+  const chunkSize = Math.ceil(urls.length / chunkNum)
 
   return chunk(urls, chunkSize)
 }
 
 async function getBatchGetRoomType(urls: string[]): Promise<RoomType[]> {
-  const requests =  getAvarageUrlChunks(urls).map(batchGetRoomType)
+  const requests = getAvarageUrlChunks(urls).map(batchGetRoomType)
 
   return await Promise.all(requests)
 }

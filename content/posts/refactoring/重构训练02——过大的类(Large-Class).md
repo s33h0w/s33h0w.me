@@ -3,7 +3,9 @@ title: 重构训练02——过大的类(Large-Class)
 date: 2020-07-21 23:23:23
 tags: 重构
 ---
+
 “如果想利用单个类做太多事情，其内往往就会出现太多字段。一旦如此，重复代码也就接踵而至了。”
+
 <!--more-->
 
 ## 某些类成员联系十分紧密
@@ -12,12 +14,12 @@ tags: 重构
 
 ```typescript
 class Person {
-  name: string;
-  officeAreaCode: number;
-  officeNumber: number;
+  name: string
+  officeAreaCode: number
+  officeNumber: number
 
   getTelephoneNumber() {
-    return this.officeAreaCode.toString() + this.officeNumber.toString();
+    return this.officeAreaCode.toString() + this.officeNumber.toString()
   }
 }
 ```
@@ -26,20 +28,20 @@ class Person {
 
 ```typescript
 class Person {
-  name: string;
-	telephoneNumber: TelephoneNumber;
+  name: string
+  telephoneNumber: TelephoneNumber
 
   getTelephoneNumber() {
-    return this.telephoneNumber.toString();
+    return this.telephoneNumber.toString()
   }
 }
 
 class TelephoneNumber {
-  areaCode: number;
-  number: number;
+  areaCode: number
+  number: number
 
   toString() {
-    return this.areaCode.toString() + this.officeNumber.toString();
+    return this.areaCode.toString() + this.officeNumber.toString()
   }
 }
 ```
@@ -54,23 +56,23 @@ class TelephoneNumber {
 
 ```typescript
 class Employee {
-  name: string;
-  type: "programmer"|"salesman"|"manager";
+  name: string
+  type: 'programmer' | 'salesman' | 'manager'
 
   private writeCode() {}
   private sales() {}
   private talking() {}
   work() {
-    switch(this.type) {
-      case "programmer":
-        this.writeCode();
-        break;
-      case "salesman":
-        this.sales();
-        break;
-      case "manager":
-        this.talking();
-        break;
+    switch (this.type) {
+      case 'programmer':
+        this.writeCode()
+        break
+      case 'salesman':
+        this.sales()
+        break
+      case 'manager':
+        this.talking()
+        break
     }
   }
 }
@@ -80,14 +82,14 @@ class Employee {
 
 ```typescript
 class Employee {
-  name: string;
-  type: "programmer"|"salesman"|"manager";
+  name: string
+  type: 'programmer' | 'salesman' | 'manager'
 
   abstract work() {}
 }
 
 class Programmer extends Employee {
-  work(){
+  work() {
     this.writeCode()
   }
   private writeCode() {}
@@ -118,12 +120,12 @@ class Manager extends Employee {
 
 ```typescript
 class Programmer {
-  name: string;
-  gender: "MALE"|"FEMALE";
-  monthlyCost: number;
+  name: string
+  gender: 'MALE' | 'FEMALE'
+  monthlyCost: number
 
   get annualCost() {
-    return this.monthlyCost * 12;
+    return this.monthlyCost * 12
   }
   work() {
     this.writeCode()
@@ -132,12 +134,12 @@ class Programmer {
 }
 
 class Salesman {
-  name: string;
-  gender: "MALE"|"FEMALE";
-  monthlyCost: number;
+  name: string
+  gender: 'MALE' | 'FEMALE'
+  monthlyCost: number
 
   get annualCost() {
-    return this.monthlyCost * 12;
+    return this.monthlyCost * 12
   }
   work() {
     this.sales()
@@ -150,18 +152,18 @@ class Salesman {
 
 ```typescript
 class Employee {
-  name: string;
-  gender: "MALE"|"FEMALE";
-  monthlyCost: number;
+  name: string
+  gender: 'MALE' | 'FEMALE'
+  monthlyCost: number
 
   get annualCost() {
-    return this.monthlyCost * 12;
+    return this.monthlyCost * 12
   }
   abstract work() {}
 }
 
 class Programmer extends Employee {
-  work(){
+  work() {
     this.writeCode()
   }
   private writeCode() {}

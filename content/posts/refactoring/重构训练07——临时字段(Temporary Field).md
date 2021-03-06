@@ -3,84 +3,85 @@ title: 重构训练07——临时字段(Temporary-Field)
 date: 2020-08-28 23:23:23
 tags: 重构
 ---
+
 如果某个字段依赖于某种特殊情况，我们可以使用引入特例，将临时字段和这种特殊情况提取出来。
+
 <!--more-->
 
 ## Problem
 
 ```typescript
 class Customer {
-  name: string;
-  isVIP: boolean;
-  private _gift: Gift;
+  name: string
+  isVIP: boolean
+  private _gift: Gift
 
   constructor(name: string, isVIP: boolean, gift: Gift) {
-    this.name = name;
-    this.isVIP = isVIP;
-    this._gift = gift;
+    this.name = name
+    this.isVIP = isVIP
+    this._gift = gift
   }
 
   get discount(): number {
     if (this.isVIP) {
-      return 0.8;
+      return 0.8
     }
 
-    return 1;
+    return 1
   }
 
   get birthdaySurperise(): Gift | null {
     if (this.isVIP) {
-      return this._gift;
+      return this._gift
     }
 
-    return null;
+    return null
   }
 }
-
 ```
 
 ## Solution
 
 ```typescript
 class Customer {
-  name: string;
+  name: string
 
   constructor(name: string) {
-    this.name = name;
+    this.name = name
   }
 
   get isVIP(): boolean {
-    return false;
+    return false
   }
 
   get discount(): number {
-    return 1;
+    return 1
   }
 
   get birthdaySurperise(): null {
-    return null;
+    return null
   }
 }
 
 class VIPCustomer {
-  name: string;
-  gift: Gift;
+  name: string
+  gift: Gift
 
   constructor(name: string, gift: Gift) {
-    this.name = name;
-    this.gift = gift;
+    this.name = name
+    this.gift = gift
   }
 
   get isVIP(): boolean {
-    return true;
+    return true
   }
 
   get discount(): number {
-    return 0.8;
+    return 0.8
   }
 
   get birthdaySurperise(): Gift {
-    return this.gift;
+    return this.gift
   }
 }
 ```

@@ -3,111 +3,111 @@ title: 重构训练06——循环(Loop)
 date: 2020-08-21 23:23:23
 tags: 重构
 ---
+
 拆分循环让循环保持专一，尽量使用以管道取代循环，增强代码的可读性。
+
 <!--more-->
 
 ## Problem
 
 ```typescript
 type Employee = {
-  id: string;
-  job: "programmer" | "other";
-  salary: number;
-};
+  id: string
+  job: 'programmer' | 'other'
+  salary: number
+}
 
 function getTotalSalaryAndProgrammerSalary(
   employees: Employee[]
 ): {
-  totalSalary: number;
-  programmerSalary: number;
+  totalSalary: number
+  programmerSalary: number
 } {
-  let totalSalary = 0;
-  let programmerSalary = 0;
+  let totalSalary = 0
+  let programmerSalary = 0
 
   for (const e of employees) {
-    if (e.job === "programmer") {
-      programmerSalary += e.salary;
+    if (e.job === 'programmer') {
+      programmerSalary += e.salary
     }
-    totalSalary += e.salary;
+    totalSalary += e.salary
   }
 
   return {
     totalSalary,
-    programmerSalary
-  };
+    programmerSalary,
+  }
 }
 
 const employees = [
   {
-    id: "123",
-    job: "programmer",
-    salary: 5
+    id: '123',
+    job: 'programmer',
+    salary: 5,
   },
   {
-    id: "234",
-    job: "other",
-    salary: 7
+    id: '234',
+    job: 'other',
+    salary: 7,
   },
   {
-    id: "345",
-    job: "programmer",
-    salary: 9
-  }
-];
-console.log(getTotalSalaryAndProgrammerSalary(employees));
+    id: '345',
+    job: 'programmer',
+    salary: 9,
+  },
+]
+console.log(getTotalSalaryAndProgrammerSalary(employees))
 // {totalSalary: 21, programmerSalary: 14}
-
 ```
 
 ## Solution
 
 ```typescript
 type Employee = {
-  id: string;
-  job: "programmer" | "other";
-  salary: number;
-};
+  id: string
+  job: 'programmer' | 'other'
+  salary: number
+}
 
 function sumSalary(employees: Employee[]): number {
-  return employees.map((it) => it.salary).reduce((acc, item) => acc + item, 0);
+  return employees.map(it => it.salary).reduce((acc, item) => acc + item, 0)
 }
 
 function getTotalSalaryAndProgrammerSalary(
   employees: Employee[]
 ): {
-  totalSalary: number;
-  programmerSalary: number;
+  totalSalary: number
+  programmerSalary: number
 } {
-  const totalSalary = sumSalary(employees);
+  const totalSalary = sumSalary(employees)
   const programmerSalary = sumSalary(
-    employees.filter((it) => it.job === "programmer")
-  );
+    employees.filter(it => it.job === 'programmer')
+  )
 
   return {
     totalSalary,
-    programmerSalary
-  };
+    programmerSalary,
+  }
 }
 const employees = [
   {
-    id: "123",
-    job: "programmer",
-    salary: 5
+    id: '123',
+    job: 'programmer',
+    salary: 5,
   },
   {
-    id: "234",
-    job: "other",
-    salary: 7
+    id: '234',
+    job: 'other',
+    salary: 7,
   },
   {
-    id: "345",
-    job: "programmer",
-    salary: 9
-  }
-];
-console.log(getTotalSalaryAndProgrammerSalary(employees));
+    id: '345',
+    job: 'programmer',
+    salary: 9,
+  },
+]
+console.log(getTotalSalaryAndProgrammerSalary(employees))
 // 21, 14
-
 ```
 
 ## 总结

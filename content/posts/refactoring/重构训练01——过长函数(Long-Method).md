@@ -3,7 +3,9 @@ title: 重构训练01——过长函数(Long-Method)
 date: 2020-07-07 23:23:23
 tags: 重构
 ---
+
 “据我们的经验，活得最长、最好的程序，其中的函数都比较短。”
+
 <!--more-->
 
 ## 函数需要用注释来说明点什么
@@ -13,13 +15,17 @@ tags: 重构
 ```typescript
 function printOwing(invoice: Invoice): void {
   // print banner
-  console.log("***********************");
-  console.log("**** Customer Owes ****");
-  console.log("***********************");
+  console.log('***********************')
+  console.log('**** Customer Owes ****')
+  console.log('***********************')
 
   // record due date
-  const today = Clock.today;
-  invoice.dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+  const today = Clock.today
+  invoice.dueDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 30
+  )
 }
 ```
 
@@ -27,19 +33,23 @@ function printOwing(invoice: Invoice): void {
 
 ```typescript
 function printOwing(invoice: Invoice): void {
-  printBanner();
-  recordDueDate(invoice);
+  printBanner()
+  recordDueDate(invoice)
 }
 
 function printBanner(): void {
-  console.log("***********************");
-  console.log("**** Customer Owes ****");
-  console.log("***********************");
+  console.log('***********************')
+  console.log('**** Customer Owes ****')
+  console.log('***********************')
 }
 
 function recordDueDate(invoice: Invoice): void {
-  const today = Clock.today;
-  invoice.dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+  const today = Clock.today
+  invoice.dueDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 30
+  )
 }
 ```
 
@@ -58,12 +68,11 @@ function recordDueDate(invoice: Invoice): void {
 
 ```typescript
 function calculateTotal(): number {
-  let basePrice = quantity * itemPrice;
+  let basePrice = quantity * itemPrice
   if (basePrice > 1000) {
-    return basePrice * 0.95;
-  }
-  else {
-    return basePrice * 0.98;
+    return basePrice * 0.95
+  } else {
+    return basePrice * 0.98
   }
 }
 ```
@@ -73,14 +82,13 @@ function calculateTotal(): number {
 ```typescript
 function calculateTotal(): number {
   if (basePrice() > 1000) {
-    return basePrice() * 0.95;
-  }
-  else {
-    return basePrice() * 0.98;
+    return basePrice() * 0.95
+  } else {
+    return basePrice() * 0.98
   }
 }
 function basePrice(): number {
-  return quantity * itemPrice;
+  return quantity * itemPrice
 }
 ```
 
@@ -107,15 +115,15 @@ function amountOverdue(aDateRange) {...}
 #### Problem
 
 ```typescript
-let low = daysTempRange.getLow();
-let high = daysTempRange.getHigh();
-let withinPlan = plan.withinRange(low, high);
+let low = daysTempRange.getLow()
+let high = daysTempRange.getHigh()
+let withinPlan = plan.withinRange(low, high)
 ```
 
 #### Solution: Preserve Whole Object 保持对象完整
 
 ```typescript
-let withinPlan = plan.withinRange(daysTempRange);
+let withinPlan = plan.withinRange(daysTempRange)
 ```
 
 ### 总结
@@ -130,10 +138,9 @@ let withinPlan = plan.withinRange(daysTempRange);
 
 ```typescript
 if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
-  charge = quantity * winterRate + winterServiceCharge;
-}
-else {
-  charge = quantity * summerRate;
+  charge = quantity * winterRate + winterServiceCharge
+} else {
+  charge = quantity * summerRate
 }
 ```
 
@@ -141,10 +148,9 @@ else {
 
 ```typescript
 if (isSummer(date)) {
-  charge = summerCharge(quantity);
-}
-else {
-  charge = winterCharge(quantity);
+  charge = summerCharge(quantity)
+} else {
+  charge = winterCharge(quantity)
 }
 ```
 
@@ -154,11 +160,11 @@ else {
 
 ```typescript
 function calculateOutstanding(invoice: Invoice): number {
-  let result = 0;
+  let result = 0
   for (const o of invoice.orders) {
-    result += o.amount;
+    result += o.amount
   }
-  return result;
+  return result
 }
 ```
 
@@ -166,8 +172,9 @@ function calculateOutstanding(invoice: Invoice): number {
 
 ```typescript
 function calculateOutstanding(invoice: Invoice): number {
-  const reducer = (accumulator: number, currentValue: number) => accumulator + currentValue;
-  return invoice.orders.reduce(reducer, 0);
+  const reducer = (accumulator: number, currentValue: number) =>
+    accumulator + currentValue
+  return invoice.orders.reduce(reducer, 0)
 }
 ```
 

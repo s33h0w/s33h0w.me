@@ -17,10 +17,9 @@ tags: 重构
 ```typescript
 // if it's not summer, use the winter rate
 if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
-  charge = quantity * winterRate;
-}
-else {
-  charge = quantity * summerRate;
+  charge = quantity * winterRate
+} else {
+  charge = quantity * summerRate
 }
 ```
 
@@ -48,10 +47,10 @@ else {
 ```typescript
 // get the sum of bedroom and bathroom
 function theNumber(rooms: Room[]): number {
-  const bedroomNum = rooms.filter((r) => r.roomType === 'bedroom').length;
-  const bathroomNum = rooms.filter((r) => r.roomType === 'bathroom').length;
+  const bedroomNum = rooms.filter(r => r.roomType === 'bedroom').length
+  const bathroomNum = rooms.filter(r => r.roomType === 'bathroom').length
 
-  return bedroomNum + bathroomNum;
+  return bedroomNum + bathroomNum
 }
 ```
 
@@ -78,10 +77,10 @@ function getSumOfBedroomAndBathroom(rooms: Room[]): number {
  */
 
 type Employee = {
-  id: string;
-  job: "programmer" | "other";
-  salary: number;
-};
+  id: string
+  job: 'programmer' | 'other'
+  salary: number
+}
 
 // function getTotalSalary(employees: Employee[]): number {
 //  return employees.map((it) => it.salary).reduce((acc, item) => acc + item, 0);
@@ -89,7 +88,7 @@ type Employee = {
 
 // get sum of the employees' salary
 function sumSalary(employees: Employee[]): number {
-  return employees.map((it) => it.salary).reduce((acc, item) => acc + item, 0);
+  return employees.map(it => it.salary).reduce((acc, item) => acc + item, 0)
 }
 
 /**
@@ -104,18 +103,18 @@ function sumSalary(employees: Employee[]): number {
 function getTotalSalaryAndProgrammerSalary(
   employees: Employee[]
 ): {
-  totalSalary: number;
-  programmerSalary: number;
+  totalSalary: number
+  programmerSalary: number
 } {
-  const totalSalary = sumSalary(employees);
+  const totalSalary = sumSalary(employees)
   const programmerSalary = sumSalary(
-    employees.filter((it) => it.job === "programmer")
-  );
+    employees.filter(it => it.job === 'programmer')
+  )
 
   return {
     totalSalary,
-    programmerSalary
-  };
+    programmerSalary,
+  }
 }
 ```
 

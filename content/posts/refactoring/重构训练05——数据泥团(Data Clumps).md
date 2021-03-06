@@ -3,55 +3,58 @@ title: 重构训练05——数据泥团(Data-Clumps)
 date: 2020-08-14 23:23:23
 tags: 重构
 ---
+
 数据泥团这种情况往往需要多种处理方法才能把杂乱的数据放在合适的位置上，建议按照先处理对象再处理函数的顺序来思考。
+
 <!--more-->
+
 ## Problem
 
 ```typescript
 type Product = {
-  id: string;
-  value: number;
-};
+  id: string
+  value: number
+}
 
 class Cart {
-  productList: Product[] = [];
-  productQuantityList: number[] = [];
-  selected: Product[] = [];
+  productList: Product[] = []
+  productQuantityList: number[] = []
+  selected: Product[] = []
 
   constructor(
     list: {
-      product: Product;
-      quantity: number;
+      product: Product
+      quantity: number
     }[]
   ) {
-    list.forEach((item) => {
-      this.productList.push(item.product);
-      this.productQuantityList.push(item.quantity);
-    });
+    list.forEach(item => {
+      this.productList.push(item.product)
+      this.productQuantityList.push(item.quantity)
+    })
   }
 
   check(id: string): void {
-    const checkedProduct = this.productList.find((p) => p.id === id);
-    checkedProduct && this.selected.push(checkedProduct);
+    const checkedProduct = this.productList.find(p => p.id === id)
+    checkedProduct && this.selected.push(checkedProduct)
   }
 
   uncheck(id: string): void {
-    this.selected = this.selected.filter((p) => p.id !== id);
+    this.selected = this.selected.filter(p => p.id !== id)
   }
 
   checkAll(): void {
-    this.selected = this.productList;
+    this.selected = this.productList
   }
 
   getTotal(): number {
     return this.productList.reduce((total, item, idx) => {
-      if (!this.selected.find((p) => p.id === item.id)) {
-        return total;
+      if (!this.selected.find(p => p.id === item.id)) {
+        return total
       }
-      const itemQuantity = this.productQuantityList[idx];
-      const itemPrice = item.value * itemQuantity;
-      return total + itemPrice;
-    }, 0);
+      const itemQuantity = this.productQuantityList[idx]
+      const itemPrice = item.value * itemQuantity
+      return total + itemPrice
+    }, 0)
   }
 }
 ```
@@ -60,54 +63,54 @@ class Cart {
 
 ```typescript
 class Cart {
-  cartItemList: CartItem[];
+  cartItemList: CartItem[]
 
   constructor(list: CartItem) {
-    this.cartItemList = list;
+    this.cartItemList = list
   }
 
   check(item: CartItem) {
-    item.check();
+    item.check()
   }
 
   unCheck(item: CartItem) {
-    item.unCheck();
+    item.unCheck()
   }
 
   checkAll() {
-    this.cartItemList.map((item) => item.check());
+    this.cartItemList.map(item => item.check())
   }
 
   getTotal() {
     return this.cartItemList.reduce((total, item) => {
-      return total + item.price;
-    }, 0);
+      return total + item.price
+    }, 0)
   }
 }
 
 class CartItem {
-  product: Product;
-  quantity: number;
-  private _checked: boolean = false;
+  product: Product
+  quantity: number
+  private _checked: boolean = false
 
   constructor(product: Product, quantity: number) {
-    this.product = product;
-    this.quantity = quantity;
+    this.product = product
+    this.quantity = quantity
   }
 
   get price() {
     if (!this._checked) {
-      return 0;
+      return 0
     }
-    return this.product.value * this.quantity;
+    return this.product.value * this.quantity
   }
 
   check() {
-    this._checked = true;
+    this._checked = true
   }
 
   unCheck() {
-    this._checked = false;
+    this._checked = false
   }
 }
 ```

@@ -3,7 +3,9 @@ title: 重构训练09——可变数据(Mutable-Data)
 date: 2020-08-30 23:23:23
 tags: 重构
 ---
+
 可变数据是一种非常常见，但是不易捕捉的坏味道。这里分成三种常见类型进行讨论。
+
 <!--more-->
 
 ## Case 1
@@ -11,27 +13,27 @@ tags: 重构
 ### Problem
 
 ```typescript
-const initialMonths = ["Jan", "March", "April", "June"];
+const initialMonths = ['Jan', 'March', 'April', 'June']
 
 function getCompletedMonths(months: string[]): string {
-  months.splice(1, 0, "Feb");
-  return months;
+  months.splice(1, 0, 'Feb')
+  return months
 }
 
-console.log(getCompletedMonths(initialMonths));
+console.log(getCompletedMonths(initialMonths))
 // ["Jan", "Feb", "March", "April", "June"]
 ```
 
 ### Solution
 
 ```typescript
-const initialMonths = ["Jan", "March", "April", "June"];
+const initialMonths = ['Jan', 'March', 'April', 'June']
 
 function getCompletedMonths(months: string[]): string {
-  return [...months].splice(1, 0, "Feb");
+  return [...months].splice(1, 0, 'Feb')
 }
 
-console.log(getCompletedMonths(initialMonths));
+console.log(getCompletedMonths(initialMonths))
 // ["Jan", "Feb", "March", "April", "June"]
 ```
 
@@ -49,10 +51,10 @@ function setOffAlarms() {}
 
 function alertForMiscreant(people: string): void {
   const miscreant = people.find(
-    (p) => p === "Michael" || p === "Trevor" || p === "Franklin"
-  );
+    p => p === 'Michael' || p === 'Trevor' || p === 'Franklin'
+  )
   if (miscreant) {
-    setOffAlarms();
+    setOffAlarms()
   }
 }
 ```
@@ -64,14 +66,12 @@ function alertForMiscreant(people: string): void {
 function setOffAlarms() {}
 
 function findMiscreant(people: string[]): string | undefined {
-  return people.find(
-    (p) => p === "Michael" || p === "Trevor" || p === "Franklin"
-  );
+  return people.find(p => p === 'Michael' || p === 'Trevor' || p === 'Franklin')
 }
 
 function alertForMiscreant(people: string[]): void {
   if (findMiscreant(people)) {
-    setOffAlarms();
+    setOffAlarms()
   }
 }
 ```
@@ -88,36 +88,41 @@ function alertForMiscreant(people: string[]): void {
 
 ```typescript
 type Option = {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
-function MutiCheck(props:{options: Option[]}) {
-  const {options} = props;
-  const [selectAll, setSelectAll] = useState(false);
-  const [selected, setSelected] = useState<Option[]>([]);
+function MutiCheck(props: {options: Option[]}) {
+  const {options} = props
+  const [selectAll, setSelectAll] = useState(false)
+  const [selected, setSelected] = useState<Option[]>([])
 
   const handleChange = (option: Option, checked: boolean): void => {
-    const currentSelected = new Set(selected);
-    if(checked) {
+    const currentSelected = new Set(selected)
+    if (checked) {
       currentSelected.add(option)
     } else {
       currentSelected.delete(option)
     }
-    setSelected(Array.from(currentSelected));
-    setSelectAll(options.every(o => currentSelected.has(o)));
+    setSelected(Array.from(currentSelected))
+    setSelectAll(options.every(o => currentSelected.has(o)))
   }
 
   return (
     <div>
-      <input type="checkbox" checked={selectAll} readOnly/> Select All
+      <input type="checkbox" checked={selectAll} readOnly /> Select All
       {options.map(o => (
         <label key={o.value}>
-          <input type="checkbox" value={o.value} onChange={e => handleChange(o,e.target.checked)}/>{o.label}
+          <input
+            type="checkbox"
+            value={o.value}
+            onChange={e => handleChange(o, e.target.checked)}
+          />
+          {o.label}
         </label>
       ))}
     </div>
-  );
+  )
 }
 ```
 

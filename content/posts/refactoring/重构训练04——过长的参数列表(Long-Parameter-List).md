@@ -3,7 +3,9 @@ title: 重构训练04——过长的参数列表(Long-Parameter-List)
 date: 2020-08-07 23:23:23
 tags: 重构
 ---
+
 “函数的参数列表应该总结函数的可变性“，尽可能找到真正匹配函数作用的参数。
+
 <!--more-->
 
 ## 可以发起查询去获得某个参数的值
@@ -12,38 +14,37 @@ tags: 重构
 
 ```typescript
 type Employee = {
-  id: string;
-  gender: "female" | "male";
-  grade: "junior" | "senior";
-};
+  id: string
+  gender: 'female' | 'male'
+  grade: 'junior' | 'senior'
+}
 
 function usedVacation(id: string): number {
   // 假设这里进行了一些计算
-  return 2;
+  return 2
 }
 
 function availableVacation(
-  gender: "female" | "male",
-  grade: "junior" | "senior",
+  gender: 'female' | 'male',
+  grade: 'junior' | 'senior',
   used: number
 ): number {
-  const base = gender === "female" ? 5 : 3;
-  const rate = grade === "junior" ? 1 : 2;
+  const base = gender === 'female' ? 5 : 3
+  const rate = grade === 'junior' ? 1 : 2
 
-  return base * rate - used;
+  return base * rate - used
 }
 
 const wangmei = {
-  id: "123123",
-  gender: "female",
-  grade: "senior"
-};
+  id: '123123',
+  gender: 'female',
+  grade: 'senior',
+}
 
-const used = usedVacation(wangmei.id);
+const used = usedVacation(wangmei.id)
 
-console.log(availableVacation(wangmei.gender, wangmei.grade, used));
+console.log(availableVacation(wangmei.gender, wangmei.grade, used))
 // 8
-
 ```
 
 ## Solution
@@ -51,12 +52,12 @@ console.log(availableVacation(wangmei.gender, wangmei.grade, used));
 ```typescript
 // ...
 function availableVacation(employee: Employee): number {
-  const base = employee.gender === "female" ? 5 : 3;
-  const rate = employee.grade === "junior" ? 1 : 2;
-  const used = usedVacation(employee.id);
+  const base = employee.gender === 'female' ? 5 : 3
+  const rate = employee.grade === 'junior' ? 1 : 2
+  const used = usedVacation(employee.id)
 
-  return base * rate - used;
-};
+  return base * rate - used
+}
 ```
 
 ## 总结
