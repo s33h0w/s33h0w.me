@@ -1,6 +1,6 @@
 ---
 title: 重构训练12——发散式变化(Divergent Change)
-date: 2020-10-04 20:00
+date: 2020-10-04 20:00:00
 tags: 重构
 ---
 
@@ -25,7 +25,7 @@ interface Lisiting {
 
 class Customer {
   timezone: string;
-  
+
   getListingUpdatedDate(listing: Listing): string {
     const date = new Date(listing.date.updated);
     const utcDate = utcToZonedTime(date, this.timezone)
@@ -36,7 +36,7 @@ class Customer {
 
 class Agent {
   timezone: string;
-  
+
   getListingUpdatedDate(listing: Listing): string {
     const date = new Date(listing.date.updated);
     const utcDate = utcToZonedTime(date, timezone)
