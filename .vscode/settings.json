@@ -7,10 +7,11 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true
   },
-  "prettier.disableLanguages": [],
+  "prettier.disableLanguages": ["html"],
   "prettier.requireConfig": false,
   "prettier.arrowParens": "avoid",
   "prettier.bracketSpacing": false,
   "prettier.htmlWhitespaceSensitivity": "strict",
-  "prettier.embeddedLanguageFormatting": "auto"
+  "prettier.embeddedLanguageFormatting": "auto",
+  "prettier.proseWrap": "preserve"
 }
