@@ -1,6 +1,6 @@
-<header>
-  <h1><a href="/">{{.Site.Title}}</a></h1>
-  {{ with .Params.subtitle }}
-  <span class="subtitle">{{.}}</span>
-  {{ end }}
+<header class="p-8 grid gird-flow-col grid-rows-8 grid-col-4 place-content-start">
+  <h1 class="col-span-4 row-span-5 mb-7"><a href="/" class="text-5xl">{{.Site.Title}}</a></h1>
+  <img src="/images/link.png" class="w-14 rounded-full col-span-1 row-span-2">
+  <span class="col-span-3 row-span-1 mx-5"><a href="https://github.com/s33h0w">{{.Site.Params.author}}@github.com</a></span>
+  <span class="col-span-3 row-span-1 mx-5">{{.Site.Params.description}}</span>
 </header>

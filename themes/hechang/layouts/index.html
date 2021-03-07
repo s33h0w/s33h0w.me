@@ -1,9 +1,7 @@
 {{ define "main" }}
 <main aria-role="main">
-  <div>
-    <!-- Note that the content for index.html, as a sort of list page, will pull from content/_index.md -->
-    {{.Content}}
-  </div>
-  <div> {{ range .Site.RegularPages }} {{ .Render "summary"}} {{ end }} </div>
+  {{ range .Site.RegularPages }}
+    {{ .Render "summary"}}
+  {{ end }}
 </main>
 {{ end }}

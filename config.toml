@@ -1,7 +1,10 @@
 baseURL = "http://s33h0w.me"
-languageCode = "en-us"
 title = "s33h0w.me"
 theme = "hechang"
+
+[params]
+  author = "s33h0w"
+  description = "My personal blog, be indie"
 
 [menu]
   [[menu.main]]

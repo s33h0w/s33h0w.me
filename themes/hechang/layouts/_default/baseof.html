@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   {{- partial "head.html" . -}}
-  <body>
+  <body class="bg-white text-gray-700">
     {{- partial "header.html" . -}}
-    <div id="content">{{- block "main" . }}{{- end }}</div>
+    <div id="content" class="container mx-auto">{{- block "main" . }}{{- end }}</div>
     {{- partial "footer.html" . -}}
   </body>
 </html>
