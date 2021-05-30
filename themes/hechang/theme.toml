@@ -11,8 +11,8 @@ features = []
 min_version = "0.41.0"
 
 [author]
-  name = ""
-  homepage = ""
+  name = "s33h0w"
+  homepage = "s33h0w.me"
 
 # If porting an existing theme
 [original]
