@@ -4,7 +4,7 @@ theme = "hechang"
 
 [params]
   author = "s33h0w"
-  description = "My personal blog, be indie"
+  description = "Personal blog, be indie"
 
 [menu]
   [[menu.main]]
