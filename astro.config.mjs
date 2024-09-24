@@ -7,7 +7,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://www.s33h0w.me",
+	site: "https://s33h0w.github.io",
 	integrations: [
 		mdx(),
 		sitemap({
