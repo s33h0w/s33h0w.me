@@ -13,7 +13,7 @@ export default defineConfig({
 		sitemap({
 			changefreq: "daily",
 			priority: 1,
-			lastmod: new Date().toISOString().split("T")[0],
+			lastmod: new Date(),
 		}),
 		tailwind(),
 	],
